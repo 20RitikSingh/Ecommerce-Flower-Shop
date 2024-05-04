@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"path/filepath"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
@@ -30,6 +32,8 @@ func main() {
 		// Otherwise, serve the requested file using the file server handler
 		fs.ServeHTTP(w, r)
 	})
+
+	http.Handle("/metrics", promhttp.Handler())
 
 	// Start the server
 	fmt.Println("Server listening on :8080")
